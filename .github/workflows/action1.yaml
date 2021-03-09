@@ -30,3 +30,12 @@ jobs:
           template: ./arm/aci.json
           parameters: name=test image=${{ secrets.REGISTRY }}/sample:${{ github.run_number }}
       - run: echo ${{ steps.deploy.outputs.containerIPv4Address }}
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: '${{ secrets.REGISTRY }}/sample:${{ github.run_number }}'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'  
