@@ -1,2 +1,2 @@
 FROM ubuntu
-FROM nginx
+FROM nginx:1.19.7-alpine
